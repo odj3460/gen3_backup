@@ -1,0 +1,93 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(dual_interface)
+
+## Compile as C++11, supported in ROS Kinetic and newer
+add_compile_options(-std=c++11)
+add_definitions(-D_OS_UNIX)
+option(USE_CONAN "Use the Conan package manager to automatically fetch the Kortex API" ON)
+
+if(NOT CONAN_TARGET_PLATFORM)
+  set(CONAN_TARGET_PLATFORM "x86")
+endif()
+message("CONAN_TARGET_PLATFORM is ${CONAN_TARGET_PLATFORM}")
+
+# Explicitely specify the build type in case the user did not do it
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+
+## Find catkin and any catkin packages
+find_package(catkin REQUIRED COMPONENTS 
+roscpp 
+rospy
+std_msgs
+tf2
+tf2_geometry_msgs
+controller_manager_msgs
+control_msgs
+message_generation
+actionlib_msgs
+actionlib
+)
+
+## Declare a catkin package
+catkin_package()
+
+## Build options and settings, similar to original CMakeLists.txt
+set (CMAKE_CXX_STANDARD 11)
+include_directories(${PROJECT_SOURCE_DIR}/thirdParty/cxxopts/)
+
+add_compile_options(-Wall)
+add_compile_options(-Wno-reorder)
+
+
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${PROJECT_SOURCE_DIR}/include/dual_interface
+  ${PROJECT_SOURCE_DIR}/src
+  ${PROJECT_SOURCE_DIR}/kortex_api/include/client
+  ${PROJECT_SOURCE_DIR}/kortex_api/include/client_stubs
+  ${PROJECT_SOURCE_DIR}/kortex_api/include/messages
+  ${PROJECT_SOURCE_DIR}/kortex_api/include/common
+  ${PROJECT_SOURCE_DIR}/kortex_api/include
+)
+
+link_directories(${PROJECT_SOURCE_DIR}/kortex_api/lib/release)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(orocos_kdl REQUIRED orocos_kdl)
+find_package(kdl_parser)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
+
+include_directories(
+  ${orocos_kdl_INCLUDE_DIRS}
+  ${kdl_parser_INCLUDE_DIRS}
+)
+
+## Add executable for ROS node
+add_executable(dual_node 
+	src/dual_node.cpp
+	#src/robot/kinova_mediator_L.cpp
+	#src/robot/kinova_mediator_R.cpp
+	#src/robot/constants.cpp
+	#src/robot/moving_slope.cpp
+
+	)
+
+
+## Add dependencies to ensure the target is built after the libraries it depends on
+add_dependencies(dual_node ${catkin_EXPORTED_TARGETS})
+
+## Specify libraries to link against
+target_link_libraries(dual_node
+  ${catkin_LIBRARIES}
+  ${orocos_kdl_LIBRARIES}
+  ${kdl_parser_LIBRARIES}
+  ${Boost_FILESYSTEM_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
+  pthread
+  ${PROJECT_SOURCE_DIR}/kortex_api/lib/libKortexApiCpp.a
+)
+

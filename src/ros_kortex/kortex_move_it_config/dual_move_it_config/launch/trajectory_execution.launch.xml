@@ -1,0 +1,29 @@
+<launch>
+
+  <!-- This file makes it easy to include the settings for trajectory execution  -->
+  <arg name="left_dof" default="7"/>
+  <arg name="right_dof" default="6"/>
+  <arg name="left_prefix" default="left_"/>
+  <arg name="right_prefix" default="right_"/>
+
+  <!-- Flag indicating whether MoveIt! is allowed to load/unload  or switch controllers -->
+  <arg name="moveit_manage_controllers" default="true"/>
+  <param name="moveit_manage_controllers" value="$(arg moveit_manage_controllers)"/>
+
+  <!-- When determining the expected duration of a trajectory, this multiplicative factor is applied to get the allowed duration of execution -->
+  <param name="trajectory_execution/allowed_execution_duration_scaling" value="2.0"/> <!-- default 1.2 -->
+  <!-- Allow more than the expected execution time before triggering a trajectory cancel (applied after scaling) -->
+  <param name="trajectory_execution/allowed_goal_duration_margin" value="2.0"/> <!-- default is 0.5 but this needs to be higher before preprocessing in the arm takes time -->
+  <!-- Allowed joint-value tolerance for validation that trajectory's first point matches current robot state -->
+  <param name="trajectory_execution/allowed_start_tolerance" value="0.01"/> <!-- default 0.01 -->
+
+  <!-- Load the robot specific controller manager; this sets the moveit_controller_manager ROS parameter -->
+  <arg name="moveit_controller_manager" default="dualgen3" />
+  <include file="$(find dual_move_it_config)/launch/$(arg moveit_controller_manager)_moveit_controller_manager.launch.xml">
+    <arg name="left_dof" value="$(arg left_dof)"/>
+    <arg name="left_prefix" value="$(arg left_prefix)"/>
+    <arg name="right_dof" value="$(arg right_dof)"/>
+    <arg name="right_prefix" value="$(arg right_prefix)"/>
+  </include>
+
+</launch>

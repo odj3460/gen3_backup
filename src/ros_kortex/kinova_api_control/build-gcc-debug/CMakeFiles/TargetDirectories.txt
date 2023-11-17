@@ -1,0 +1,9 @@
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/rebuild_cache.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/edit_cache.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Test_single_move.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Test_Dual_set.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Test_Dual_move_filter.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Test_Dual_move_assist_v2.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Test_Dual_move_assist_v1.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Test_Dual_move_admit.dir
+/home/camasodj/catkin_ws/src/ros_kortex/kinova_api_control/build-gcc-debug/CMakeFiles/src_Kinematics_compute-kinematics.dir

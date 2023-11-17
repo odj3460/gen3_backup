@@ -1,0 +1,14 @@
+<launch>
+
+  <arg name="left_dof" default="7"/>
+  <arg name="right_dof" default="6"/>
+  <arg name="left_prefix" default="left_"/>
+  <arg name="right_prefix" default="right_"/>
+
+  <!-- Set the param that trajectory_execution_manager needs to find the controller plugin -->
+  <param name="moveit_controller_manager" value="moveit_fake_controller_manager/MoveItFakeControllerManager"/>
+
+  <!-- The rest of the params are specific to this plugin -->
+  <rosparam file="$(find dual_move_it_config)/config/7dof/fake_controllers.yaml" subst_value="true"/>
+
+</launch>

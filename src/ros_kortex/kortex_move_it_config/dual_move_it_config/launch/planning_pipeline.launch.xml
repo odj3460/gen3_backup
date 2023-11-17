@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- This file makes it easy to include different planning pipelines;
+       It is assumed that all planning pipelines are named XXX_planning_pipeline.launch  -->
+
+  <arg name="pipeline" default="ompl" />
+  <arg name="left_prefix" default="left_"/>
+  <arg name="right_prefix" default="right_"/>
+
+  <include file="$(find dual_move_it_config)/launch/$(arg pipeline)_planning_pipeline.launch.xml">
+    <arg name="left_prefix" value="$(arg left_prefix)"/>
+    <arg name="right_prefix" value="$(arg right_prefix)"/>
+  </include>
+
+</launch>
